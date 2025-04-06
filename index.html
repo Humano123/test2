@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Saudação Legal</title>
+</head>
+<body>
+  <h1>Digite seu nome:</h1>
+  <form id="form">
+    <input type="text" id="nome" placeholder="Seu nome aqui" required />
+    <button type="submit">Enviar</button>
+  </form>
+
+  <h2 id="resposta"></h2>
+
+  <script>
+    const form = document.getElementById('form');
+    const resposta = document.getElementById('resposta');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value;
+
+      const res = await fetch('/saudacao', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome })
+      });
+
+      const data = await res.json();
+      resposta.textContent = data.mensagem;
+    });
+  </script>
+</body>
+</html>
